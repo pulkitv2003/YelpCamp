@@ -14,6 +14,7 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const port = process.env.port || 3000;
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
@@ -148,12 +149,13 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
-    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'  
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(process.env.port, () => {
-    console.log('http://localhost:3000/')
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
+    
 })
 
 
